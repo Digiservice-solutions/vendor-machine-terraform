@@ -1,5 +1,5 @@
-bucket = "bucket-terraform-state-digi-v3"
+bucket = "bucket-terraform-state-rekord-v2"
 key = "vending-machine-test/stage/integration/terraform.tfstate"
 region = "us-west-2"
-dynamodb_table = "terraform-up-and-running-locks-v3"
+dynamodb_table = "terraform-locks-rekord"
 encrypt = true

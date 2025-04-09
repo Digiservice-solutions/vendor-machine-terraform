@@ -14,6 +14,7 @@ IAM policies:
 - SSH key pair for bastion access
 
 Deployment
+- First time you run the environment, initialize the project with the Makefile of "init" folder to manage Terraform state.
 - Use "terraform init"  initializes the Terraform working directory and then "terraform apply" to apply changes to the infrastructure. Use the commands from the Makefile in each infrastructure folder in the right order.
 - Order: 
 (1) IAM

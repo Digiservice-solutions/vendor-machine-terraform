@@ -35,7 +35,7 @@ data "aws_security_group" "ecs_sg" {
 data "terraform_remote_state" "compute" {
   backend = "s3"
   config = {
-    bucket = "bucket-terraform-state-digi-v3"
+    bucket = "bucket-terraform-state-rekord-v2"
     key    = "vending-machine-test/stage/compute/terraform.tfstate"
     region = "us-west-2"
   }
