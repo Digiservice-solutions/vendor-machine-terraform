@@ -7,7 +7,6 @@ terraform {
   backend "s3" {}
 }
 
-//TODO Spostare questa roba in IAM
 resource "aws_iam_role" "ecs_execution_role" {
   name = "ecsExecutionRole"
 
@@ -25,7 +24,6 @@ resource "aws_iam_role" "ecs_execution_role" {
   })
 }
 
-//TODO Spostare questa roba in IAM
 resource "aws_iam_role_policy_attachment" "ecs_execution_policy" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
   role       = aws_iam_role.ecs_execution_role.name

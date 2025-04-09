@@ -12,4 +12,3 @@ output "nat_gateway_id" {
   description = "Id of the nat gateway"
   value       = aws_nat_gateway.nat-gateway.id
 }
-

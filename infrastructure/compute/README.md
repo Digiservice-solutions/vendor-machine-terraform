@@ -6,10 +6,8 @@ Deploys application infrastructure including ECS cluster, service, Network Load 
 ## Key Components
 - **ECS Cluster** with Fargate task definition
 - **Network Load Balancer** (NLB) in public subnets
-- **Security Groups** for ECS and bastion host
 - **Bastion Host** EC2 instance in public subnet
 - **Service Discovery** for private DNS namespace
-- **IAM Roles** for ECS execution
 
 ## Prerequisites
 - Existing VPC and subnets (from Networking module)

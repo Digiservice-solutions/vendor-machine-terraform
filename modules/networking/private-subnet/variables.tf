@@ -1,5 +1,3 @@
-
-
 variable "vpc_id" {
   type = string
   description = "Configurations for private subnet"
@@ -19,18 +17,3 @@ variable "private_subnet" {
   })
   description = "Configurations for private subnet"
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

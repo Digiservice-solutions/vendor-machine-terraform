@@ -1,11 +1,8 @@
-
-
-# Creazione della VPC
 resource "aws_vpc" "vpc" {
-  cidr_block = "${var.cidr_block}"  # Imposta il CIDR block della VPC
+  cidr_block = "${var.cidr_block}"
   tags = {
-    Name = "${var.vpc_name}"           # Tag per identificare la VPC
-    Environment = "${var.env_name}"        # Ambiente (può essere dev, staging, prod)
+    Name = "${var.vpc_name}"
+    Environment = "${var.env_name}"
   }
   enable_dns_hostnames = true
   enable_dns_support = true

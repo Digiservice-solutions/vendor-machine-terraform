@@ -1,5 +1,3 @@
-
-
 variable "vpc_id" {
     description = "The vpc id where the subnet is located"
     type = string
@@ -25,15 +23,3 @@ variable "public_subnet" {
   })
   description = "Configurations for public subnet"
 }
-
-
-
-
-
-
-
-
-
-
-
-

@@ -7,7 +7,6 @@ terraform {
   backend "s3" {}
 }
 
-
 #-----------------VPC----------------------------------------
 module "vpc" {
   source = "../../modules/networking/vpc"
@@ -24,10 +23,9 @@ resource "aws_internet_gateway" "internet-gateway" {
   }
 }
 
-#----Definizione della Route Table
+#----Route Table
 resource "aws_route_table" "public_route_table" {
   vpc_id = module.vpc.vpc_id
-  # Route per instradare il traffico verso Internet (0.0.0.0/0) tramite il gateway Internet
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.internet-gateway.id
@@ -44,7 +42,6 @@ module "public_subnet_1" {
   internet_gateway = aws_internet_gateway.internet-gateway
   public_route_table = aws_route_table.public_route_table
 }
-
 
 module "public_subnet_2" {
   source = "../../modules/networking/public-subnet"
@@ -78,14 +75,14 @@ resource "aws_security_group" "ssh_bastion_ec2_v2" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]  # Il tuo IP pubblico per accesso SSH
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]  # Permetti a tutte le destinazioni di ricevere traffico
+    cidr_blocks = ["0.0.0.0/0"]
   }
 }
 
@@ -94,7 +91,6 @@ resource "aws_security_group" "ssh_private_ec2_v2" {
   description = "Security group for SSH access"
   vpc_id      = module.vpc.vpc_id
 
-  # Regola ingress per SSH (porta 22)
   ingress {
     from_port   = 22
     to_port     = 22
@@ -102,17 +98,14 @@ resource "aws_security_group" "ssh_private_ec2_v2" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  # Regola egress per tutto il traffico in uscita
   egress {
     from_port   = 0
     to_port     = 0
-    protocol    = "-1"  # -1 significa tutti i protocolli
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
 
-
-//TODO TO MOVE in networking module
 resource "aws_security_group" "ecs_sg" {
   name        = "ecs-sg"
   vpc_id      = module.vpc.vpc_id
@@ -150,4 +143,3 @@ resource "aws_security_group" "lb_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
-

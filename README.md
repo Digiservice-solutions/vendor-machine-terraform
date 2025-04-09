@@ -1,5 +1,7 @@
 # vendor-machine-terraform
-Repository for Terraform code to expose vendor-machine functions. 
+Repository for Terraform code to expose vendor-machine functions.
+
+![alt text](image.png)
 
 Prerequisites
 - Terraform ≥ 1.0
@@ -12,5 +14,9 @@ IAM policies:
 - SSH key pair for bastion access
 
 Deployment
-- See Makefile in "infrastructure" folder
-- Order: (1) Networking, (2) Compute, (3) Integration
+- Use "terraform init"  initializes the Terraform working directory and then "terraform apply" to apply changes to the infrastructure. Use the commands from the Makefile in each infrastructure folder in the right order.
+- Order: 
+(1) IAM
+(2) Networking
+(3) Compute
+(4) Integration

@@ -73,13 +73,13 @@ resource "aws_ecs_task_definition" "task" {
   requires_compatibilities = ["FARGATE"]
   cpu                      = "256"
   memory                   = "512"
-  execution_role_arn       = data.aws_iam_role.ecs_execution_role.arn  # Ruolo di esecuzione aggiunto
-  task_role_arn            = data.aws_iam_role.ecs_execution_role.arn  # Facoltativo, se hai bisogno di un ruolo per il task
+  execution_role_arn       = data.aws_iam_role.ecs_execution_role.arn
+  task_role_arn            = data.aws_iam_role.ecs_execution_role.arn
 
   container_definitions = jsonencode([
     {
       name  = "vendor_machine_app"
-      image = "178929176661.dkr.ecr.us-east-1.amazonaws.com/vending-machine-test:1.0"  # Cambia con la tua immagine
+      image = "178929176661.dkr.ecr.us-east-1.amazonaws.com/vending-machine-test:1.0"
       portMappings = [
         {
           containerPort = 3000
@@ -110,11 +110,10 @@ resource "aws_ecs_service" "service" {
   }
 }
 
-
 resource "aws_lb" "default" {
   name               = "do4m-lb"
-  internal           = true              # Impostato su true per renderlo privato
-  load_balancer_type = "network"        # Impostato su "network" per creare un NLB
+  internal           = true              
+  load_balancer_type = "network"
   subnets            = [data.aws_subnet.public_subnet_1.id, data.aws_subnet.public_subnet_2.id]
   security_groups    = [data.aws_security_group.lb_sg.id]
 }
@@ -138,7 +137,6 @@ resource "aws_lb_listener" "hello_world" {
   }
 }
 
-
 resource "aws_service_discovery_private_dns_namespace" "private_dns" {
   name        = "private-service.local"
   description = "Private DNS namespace for ECS"
@@ -157,10 +155,8 @@ resource "aws_service_discovery_service" "my_service_discovery" {
   }
 }
 
-
-
 resource "aws_instance" "private_ec2" {
-  ami           = "ami-087f352c165340ea1" # Sostituisci con l'AMI desiderata
+  ami           = "ami-087f352c165340ea1"
   instance_type = "t2.micro"
   subnet_id     = data.aws_subnet.private_subnet_1.id
   key_name      = "test_key"
@@ -172,21 +168,13 @@ resource "aws_instance" "private_ec2" {
 }
 
 resource "aws_instance" "bastion" {
-  ami           = "ami-087f352c165340ea1"  # Sostituisci con l'AMI desiderata
+  ami           = "ami-087f352c165340ea1"
   instance_type = "t2.micro"
   subnet_id     = data.aws_subnet.public_subnet_1.id
-  key_name      = "test_key"  # La tua chiave SSH
-  associate_public_ip_address = true  # IP pubblico
+  key_name      = "test_key"
+  associate_public_ip_address = true
   vpc_security_group_ids = [data.aws_security_group.ssh_bastion_ec2.id]
   tags = {
     Name = "Bastion-Host"
   }
 }
-
-
-
-
-
-
-
-

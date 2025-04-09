@@ -28,7 +28,6 @@ data "aws_subnet" "private_subnet_2" {
   }
 }
 
-
 data "aws_security_group" "ecs_sg" {
   name = "ecs-sg"
 }
@@ -41,8 +40,6 @@ data "terraform_remote_state" "compute" {
     region = "us-west-2"
   }
 }
-
-
 
 #1: API Gateway
 resource "aws_apigatewayv2_api" "api" {
@@ -65,7 +62,6 @@ resource "aws_apigatewayv2_integration" "api_integration" {
   connection_type  = "VPC_LINK"
   connection_id    = aws_apigatewayv2_vpc_link.vpc_link.id
   integration_method = "ANY"
-
 }
 
 #4: APIGW Route
@@ -82,28 +78,9 @@ resource "aws_apigatewayv2_route" "post_beverage_route" {
   target    = "integrations/${aws_apigatewayv2_integration.api_integration.id}"
 }
 
-
 #5: APIGW Stage
 resource "aws_apigatewayv2_stage" "default_stage" {
   api_id      = aws_apigatewayv2_api.api.id
   name        = "$default"
   auto_deploy = true
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
