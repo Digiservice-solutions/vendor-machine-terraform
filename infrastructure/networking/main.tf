@@ -69,5 +69,85 @@ module "private_subnet_2" {
   nat_gateway_id = module.public_subnet_2.nat_gateway_id
 }
 
+resource "aws_security_group" "ssh_bastion_ec2_v2" {
+  name = "ssh_bastion_ec2_v2"
+  description = "Allow SSH access from specific IP"
+  vpc_id      = module.vpc.vpc_id
 
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]  # Il tuo IP pubblico per accesso SSH
+  }
+
+  egress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]  # Permetti a tutte le destinazioni di ricevere traffico
+  }
+}
+
+resource "aws_security_group" "ssh_private_ec2_v2" {
+  name        = "ssh_private_ec2_v2"
+  description = "Security group for SSH access"
+  vpc_id      = module.vpc.vpc_id
+
+  # Regola ingress per SSH (porta 22)
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # Regola egress per tutto il traffico in uscita
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"  # -1 significa tutti i protocolli
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+
+//TODO TO MOVE in networking module
+resource "aws_security_group" "ecs_sg" {
+  name        = "ecs-sg"
+  vpc_id      = module.vpc.vpc_id
+
+  ingress {
+    from_port   = 3000
+    to_port     = 3000
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_security_group" "lb_sg" {
+  name   = "lb-sg"
+  vpc_id = module.vpc.vpc_id
+
+  ingress {
+    protocol    = "tcp"
+    from_port   = 80
+    to_port     = 80
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
 

@@ -28,9 +28,6 @@ data "aws_subnet" "private_subnet_2" {
   }
 }
 
-data "aws_lb" "load_balancer" {
-  name = "do4m-lb"
-}
 
 data "aws_security_group" "ecs_sg" {
   name = "ecs-sg"
@@ -44,6 +41,7 @@ data "terraform_remote_state" "compute" {
     region = "us-west-2"
   }
 }
+
 
 
 #1: API Gateway
