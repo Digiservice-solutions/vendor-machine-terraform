@@ -94,7 +94,7 @@ resource "aws_ecs_service" "service" {
   name            = "my-service"
   cluster         = aws_ecs_cluster.cluster.id
   task_definition = aws_ecs_task_definition.task.arn
-  desired_count   = 1
+  desired_count   = 2
   launch_type     = "FARGATE"
   network_configuration {
     subnets          = [data.aws_subnet.private_subnet_1.id,data.aws_subnet.private_subnet_2.id]
