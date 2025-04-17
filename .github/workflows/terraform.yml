@@ -9,7 +9,7 @@ on:
       - main
 jobs:
   terraform:
-    runs-on: windows_386
+    runs-on: ubuntu-latest
 
     steps:
     - name: Configure AWS credentials
